@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="bg-layer" class="bg-deep-focus"></div>
+    
+    <div id="volume-warning" class="warning-banner">
+        ⚠️ Volume alto detectado. Proteja seus ouvidos.
+    </div>
+
+    <main class="app-container">
+        
+        <div class="center-stage">
+            <div class="visualizer-container">
+                <div class="visualizer-circle" id="visualizer"></div>
+            </div>
+
+            <div class="timer-display" id="timer-display">25:00</div>
+            <div class="timer-status" id="timer-status">Pronto para Focar</div>
+        </div>
+
+        <!-- NEW CONTROL BAR -->
+        <div class="control-bar">
+            <!-- Profile Trigger -->
+            <div style="position: relative;">
+                <button id="btn-profiles" class="btn-control" aria-label="Mudar Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </button>
+                <!-- Profile Modal -->
+                <div id="popup-profiles" class="popup-menu">
+                    <button class="profile-option selected" data-id="deep_focus">Foco Profundo</button>
+                    <button class="profile-option" data-id="ocean_flow">Fluxo do Oceano</button>
+                    <button class="profile-option" data-id="stormy_cabin">Cabana na Tempestade</button>
+                    <button class="profile-option" data-id="zen_garden">Jardim Zen</button>
+                    <button class="profile-option" data-id="beta_boost">Beta Boost</button>
+                </div>
+            </div>
+
+            <!-- Skip -->
+            <button id="btn-skip" class="btn-control" aria-label="Pular">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+            </button>
+
+            <!-- Main Play -->
+            <button id="btn-play" class="btn-control btn-play" aria-label="Play Pause">
+                <svg id="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg id="icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
+
+            <!-- Master Volume Trigger -->
+            <div style="position: relative;">
+                <button id="btn-volume" class="btn-control" aria-label="Volume Geral">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <!-- Volume Popup -->
+                <div id="popup-volume" class="popup-menu" style="width: auto;">
+                    <div class="volume-popup-content">
+                        <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mixer Trigger -->
+            <button id="btn-mixer" class="btn-control" aria-label="Configurar Mixer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- SLIDING MIXER PANEL -->
+    <aside class="mixer-panel" id="mixer-panel">
+        <div class="mixer-header">
+            <h3>Mixer de Canais</h3>
+            <button id="btn-close-mixer" class="btn-close">×</button>
+        </div>
+        
+        <div class="mixer-content">
+            <div class="control-group">
+                <h4>Ambiente Dinâmico</h4>
+                <div class="slider-row">
+                    <label>Ondas do Mar <span>Volume</span></label>
+                    <input type="range" data-param="volSea" min="0" max="1" step="0.01">
+                </div>
+                <div class="slider-row">
+                    <label>Vento & Rajadas <span>Volume</span></label>
+                    <input type="range" data-param="volWind" min="0" max="1" step="0.01">
+                </div>
+                
+                <div class="slider-row mt-2">
+                    <label>Chuva <span>Constante</span></label>
+                    <input type="range" data-param="volRain" min="0" max="1" step="0.01">
+                </div>
+                <div class="slider-row">
+                    <label>Trovões <span>Rumble</span></label>
+                    <input type="range" data-param="volThunder" min="0" max="1" step="0.01">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h4>Base Sonora</h4>
+                <div class="slider-row">
+                    <label>Drone Atmosférico <span>Grave</span></label>
+                    <input type="range" data-param="volDrone" min="0" max="1" step="0.01">
+                </div>
+                <div class="slider-row">
+                    <label>Pink Noise <span>Bloqueio</span></label>
+                    <input type="range" data-param="volPink" min="0" max="1" step="0.01">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h4>Cognitivo</h4>
+                <div class="slider-row">
+                    <label>Melodia Neural <span>Synth</span></label>
+                    <input type="range" data-param="volSynth" min="0" max="1" step="0.01">
+                </div>
+                <div class="slider-row">
+                    <label>Ondas Binaurais <span>Foco</span></label>
+                    <input type="range" data-param="volBinaural" min="0" max="1" step="0.01">
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>
